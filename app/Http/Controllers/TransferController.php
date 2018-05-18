@@ -7,10 +7,10 @@ use Input;
 use Excel;
 use Charts;
 use App\Item;
-use App\Deposit;
+use App\Transfer;
 use Illuminate\Http\Request;
 
-class DepositController extends Controller
+class TransferController extends Controller
 {
    public function index(Request $request)
 	{
@@ -24,11 +24,11 @@ class DepositController extends Controller
          $date2      =  $request->date2;
       }
 
-      $deposits = Deposit::orderBy('date', 'desc')
+      $transfers = Transfer::orderBy('date', 'desc')
                            ->whereBetween('date', array($date1, $date2))
                            ->get();
 
-		return view('deposits.index', compact('date1', 'date2', 'deposits', 'no'));
+		return view('transfers.index', compact('date1', 'date2', 'transfers', 'no'));
 	}
 
    public function importExcel()
@@ -42,11 +42,16 @@ class DepositController extends Controller
             // dd($data);
    			if(!empty($data) && $data->count()){
    				foreach ($data as $key => $value) {
-   					$inserts[] = ['bank' => $value->bank, 'date' => date('Y-m-d', strtotime($value->tanggal)), 'nominal' => $value->deposit];
+   					$inserts[] = [
+                     'downline' => $value->tujuan,
+                     'date' => date('Y-m-d', strtotime($value->tanggal)),
+                     'nominal' => $value->deposit,
+                     'status' => $value->status,
+                  ];
    				}
                // dd($inserts);
    				if(!empty($inserts)){
-   					DB::table('deposits')->insert($inserts);
+   					DB::table('transfers')->insert($inserts);
    					// dd('Insert Record successfully.');
                   return back()->with('success', 'Data imported');
    				}else {
@@ -56,7 +61,6 @@ class DepositController extends Controller
          } catch (\Exception $e) {
             return back()->with('warning', 'Sorry your file or data format does not comply with the rules. Please check and try again.');
          }
-
 		}
 
 		return back()->with('warning', 'Please select file');

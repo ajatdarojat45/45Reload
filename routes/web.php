@@ -12,17 +12,38 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+   if (!Auth::guest()) {
+      return view('dashboard');
+   }
+    return view('login');
 });
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', function () {
+   return redirect('dashboard');
+});
 
-Route::get('importExport', 'MaatwebsiteDemoController@importExport');
-Route::get('downloadExcel/{type}', 'MaatwebsiteDemoController@downloadExcel');
-Route::post('importExcel', 'MaatwebsiteDemoController@importExcel');
+Route::group(['middleware' =>'auth'], function(){
+   Route::get('/dashboard', function () {
+      return view('dashboard');
+   })->name('dashboard');
 
-// deposits
-Route::get('deposit/index', 'DepositController@index')->name('deposit/index');
-Route::post('deposit/importExcel', 'DepositController@importExcel')->name('deposit/importExcel');
+   // test
+   Route::get('importExport', 'MaatwebsiteDemoController@importExport');
+   Route::get('downloadExcel/{type}', 'MaatwebsiteDemoController@downloadExcel');
+   Route::post('importExcel', 'MaatwebsiteDemoController@importExcel');
+
+   // deposits
+   Route::get('deposit/index', 'DepositController@index')->name('deposit/index');
+   Route::post('deposit/importExcel', 'DepositController@importExcel')->name('deposit/importExcel');
+
+   // Transaction
+   Route::get('transaction/index', 'TransactionController@index')->name('transaction/index');
+   Route::post('transaction/importExcel', 'TransactionController@importExcel')->name('transaction/importExcel');
+
+   // Transfers
+   Route::get('transfer/index', 'TransferController@index')->name('transfer/index');
+   Route::post('transfer/importExcel', 'TransferController@importExcel')->name('transfer/importExcel');
+});

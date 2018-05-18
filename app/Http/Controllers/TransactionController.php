@@ -6,11 +6,10 @@ use DB;
 use Input;
 use Excel;
 use Charts;
-use App\Item;
-use App\Deposit;
+use App\Transaction;
 use Illuminate\Http\Request;
 
-class DepositController extends Controller
+class TransactionController extends Controller
 {
    public function index(Request $request)
 	{
@@ -24,11 +23,11 @@ class DepositController extends Controller
          $date2      =  $request->date2;
       }
 
-      $deposits = Deposit::orderBy('date', 'desc')
+      $transactions = Transaction::orderBy('date', 'desc')
                            ->whereBetween('date', array($date1, $date2))
                            ->get();
 
-		return view('deposits.index', compact('date1', 'date2', 'deposits', 'no'));
+		return view('transactions.index', compact('date1', 'date2', 'transactions', 'no'));
 	}
 
    public function importExcel()
@@ -42,11 +41,18 @@ class DepositController extends Controller
             // dd($data);
    			if(!empty($data) && $data->count()){
    				foreach ($data as $key => $value) {
-   					$inserts[] = ['bank' => $value->bank, 'date' => date('Y-m-d', strtotime($value->tanggal)), 'nominal' => $value->deposit];
+   					$inserts[] = [
+                     'date' => date('Y-m-d', strtotime($value->tanggal)),
+                     'costumer' => $value->tujuan,
+                     'distributor_price' => $value->distributor,
+                     'sell_price' => $value->jual,
+                     'profit' => $value->laba,
+                     'status' => $value->status,
+                  ];
    				}
                // dd($inserts);
    				if(!empty($inserts)){
-   					DB::table('deposits')->insert($inserts);
+   					DB::table('transactions')->insert($inserts);
    					// dd('Insert Record successfully.');
                   return back()->with('success', 'Data imported');
    				}else {

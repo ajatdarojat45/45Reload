@@ -1,6 +1,6 @@
 @extends('layouts.header')
 @section('title')
-   Deposit
+   Transfer
 @endsection
 @section('content')
 <div class="container">
@@ -18,9 +18,10 @@
 	@endif
 	<center>
 		<a href="{{route('dashboard')}}" style="color:#808080">/Dashboard</a>
-		<b style="color:#808080">/Deposit</b>
+		<b style="color:#808080">/Transfer</b>
 	</center>
-	<form style="border: 1px solid #a1a1a1;margin-top: 15px;padding: 10px;" action="{{ URL::to('deposit/importExcel') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+	{{-- form --}}
+	<form style="border: 1px solid #a1a1a1;margin-top: 15px;padding: 10px;" action="{{ URL::to('transfer/importExcel') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
 		{{ csrf_field() }}
 		<label for="">Import your file here (.xsl & .xslx) :</label>
 		<div class="row">
@@ -35,7 +36,7 @@
 		<div class="col-lg-12 col-md-12">
 			<div class="tabs-container">
 				<ul class="nav nav-tabs">
-					<li class="active"><a data-toggle="tab" href="#deposit"> Deposit</a></li>
+					<li class="active"><a data-toggle="tab" href="#deposit"> Transfer</a></li>
 					<li class=""><a data-toggle="tab" href="#graph"> Graph</a></li>
 				</ul>
 				<div class="tab-content">
@@ -45,7 +46,7 @@
 							<div class="row">
 								<div class="col-md-6 col-lg-6">
    								 <label for="formGroupExampleInput">Search :</label>
-									 <form class="" action="{{route('deposit/index')}}" method="get">
+									 <form class="" action="{{route('transfer/index')}}" method="get">
 										 <div class="input-group">
 											 <div class="" id="data_1">
 												 <div class="input-group date">
@@ -68,7 +69,7 @@
 									 </form>
    							</div>
 								<div class="col-md-6 col-lg-6">
-									<label for="formGroupExampleInput" class="pull-right">Export to :</label><br><br>
+									<label class="pull-right">Export to :</label><br><br>
 									<button type="button" style="margin-left:5px;" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="Export ke PDF" onclick="">
 										<i class="fa fa-file-pdf-o"></i> PDF
 									</button>
@@ -83,8 +84,9 @@
 									 <thead>
 										  <tr>
 												<th style="text-align: center;">No</th>
-												<th style="text-align: center;">Bank</th>
+												<th style="text-align: center;">Downline</th>
 												<th style="text-align: center;">Nominal</th>
+												<th style="text-align: center;">Status</th>
 												<th style="text-align: center;">Date</th>
 												<th style="text-align: center;">Action</th>
 										  </tr>
@@ -95,18 +97,19 @@
 											$labels[] = 'Start';
 											$values[] = 0;
 										 @endphp
-										 @foreach ($deposits as $deposit)
+										 @foreach ($transfers as $transfer)
 											 <tr>
 												 <td class="text-center">{{++$no}}</td>
-												 <td class="text-center">{{$deposit->bank}}</td>
-												 <td class="text-right">{{GlobalHelper::f_currency($deposit->nominal)}}</td>
-												 <td class="text-center">{{date('d M. Y', strtotime($deposit->date))}}</td>
+												 <td class="text-center">{{$transfer->downline}}</td>
+												 <td class="text-right">{{GlobalHelper::f_currency($transfer->nominal)}}</td>
+												 <td class="text-center">{{$transfer->status}}</td>
+												 <td class="text-center">{{date('d M. Y', strtotime($transfer->date))}}</td>
 												 <td></td>
 											 </tr>
 											 @php
-											 	$total = $total + $deposit->nominal;
-												$labels[] = date('d M. Y', strtotime($deposit->date));
-												$values[] = $deposit->nominal;
+											 	$total = $total + $transfer->nominal;
+												$labels[] = date('d M. Y', strtotime($transfer->date));
+												$values[] = $transfer->nominal;
 												// dd($labels);
 											 @endphp
 										 @endforeach
@@ -115,7 +118,7 @@
 									 	<tr>
 									 		<th colspan="2"class="text-center">Total</th>
 											<th class="text-right">{{GlobalHelper::f_currency($total)}}</th>
-											<th colspan="2"></th>
+											<th colspan="3"></th>
 									 	</tr>
 									 </tfoot>
 								</table>
