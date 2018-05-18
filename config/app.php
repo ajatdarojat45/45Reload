@@ -160,6 +160,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         'Maatwebsite\Excel\ExcelServiceProvider',
+        App\Providers\GlobalHelperServiceProvider::class,
 
     ],
 
@@ -211,6 +212,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
         'Input' => Illuminate\Support\Facades\Input::class,
+        'GlobalHelper' => App\Helpers\GlobalHelper::class,
 
     ],
 

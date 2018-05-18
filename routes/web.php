@@ -22,3 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('importExport', 'MaatwebsiteDemoController@importExport');
 Route::get('downloadExcel/{type}', 'MaatwebsiteDemoController@downloadExcel');
 Route::post('importExcel', 'MaatwebsiteDemoController@importExcel');
+
+// deposits
+Route::get('deposit/index', 'DepositController@index')->name('deposit/index');
+Route::post('deposit/importExcel', 'DepositController@importExcel')->name('deposit/importExcel');
