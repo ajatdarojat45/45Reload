@@ -14,6 +14,7 @@
     <link href="{{asset('bootstrap-3/css/bootstrap.min.css')}}" rel="stylesheet"> {{-- dataTables --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <link href="{{ asset('inspinia/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    {!! Charts::assets() !!}
 </head>
 
 <body>

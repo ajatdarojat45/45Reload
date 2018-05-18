@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Input;
 use Excel;
+use Charts;
 use App\Item;
 use App\Deposit;
 use Illuminate\Http\Request;
@@ -27,7 +28,14 @@ class DepositController extends Controller
                            ->whereBetween('date', array($date1, $date2))
                            ->get();
 
-		return view('deposits.index', compact('date1', 'date2', 'deposits', 'no'));
+                           $chart = Charts::create('line', 'highcharts')
+			->setTitle('My nice chart')
+			->setLabels(['First', 'Second', 'Third'])
+			->setValues([5,10,20])
+			->setDimensions(1000,500)
+			->setResponsive(false);
+
+		return view('deposits.index', compact('date1', 'date2', 'deposits', 'no', 'chart'));
 	}
 
    public function importExcel()

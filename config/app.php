@@ -161,6 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         'Maatwebsite\Excel\ExcelServiceProvider',
         App\Providers\GlobalHelperServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
 
     ],
 
@@ -213,6 +214,7 @@ return [
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
         'Input' => Illuminate\Support\Facades\Input::class,
         'GlobalHelper' => App\Helpers\GlobalHelper::class,
+        'Charts' => ConsoleTVs\Charts\Charts::class,
 
     ],
 

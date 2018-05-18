@@ -14,6 +14,10 @@
 		<strong>Success!</strong> {{session('warning') }}
 	</div>
 	@endif
+	<center>
+		<a href="#" style="color:#808080">/Dashboard</a>
+		<b style="color:#808080">/Deposit</b>
+	</center>
 	<form style="border: 1px solid #a1a1a1;margin-top: 15px;padding: 10px;" action="{{ URL::to('deposit/importExcel') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
 		{{ csrf_field() }}
 		<label for="">Import File Here :</label>
@@ -80,6 +84,8 @@
 									 <tbody>
 										 @php
 										 	$total = 0;
+											$labels[] = 'Start';
+											$values[] = 0;
 										 @endphp
 										 @foreach ($deposits as $deposit)
 											 <tr>
@@ -91,6 +97,9 @@
 											 </tr>
 											 @php
 											 	$total = $total + $deposit->nominal;
+												$labels[] = date('d M. Y', strtotime($deposit->date));
+												$values[] = $deposit->nominal;
+												// dd($labels);
 											 @endphp
 										 @endforeach
 									 </tbody>
@@ -109,6 +118,15 @@
 					{{-- graph --}}
 					<div id="graph" class="tab-pane">
 						<div class="panel-body">
+							<div class="text-center table-responsive">
+								{!! Charts::create('bar', 'highcharts')
+											->setTitle('Deposit Graph')
+											->setLabels($labels)
+											->setValues($values)
+											->setDimensions(1000,500)
+											->setResponsive(false)->render();
+								!!}
+							</div>
 						</div>
 					</div>
 					{{-- graph --}}

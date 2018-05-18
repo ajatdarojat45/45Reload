@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "39f536b90956a7b69f2c291c7d65199e",
+    "content-hash": "2e2041c6e1f6a1b8915ccdfd4344e6c4",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -367,6 +367,42 @@
             "time": "2018-02-07T20:20:57+00:00"
         },
         {
+            "name": "hilioski/charts",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/djkiko20/Charts.git",
+                "reference": "b62e0d966a163dd4a7880cbdb9ebc6f4dcaf0508"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/djkiko20/Charts/zipball/b62e0d966a163dd4a7880cbdb9ebc6f4dcaf0508",
+                "reference": "b62e0d966a163dd4a7880cbdb9ebc6f4dcaf0508",
+                "shasum": ""
+            },
+            "require": {
+                "jlawrence/eos": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ConsoleTVs\\Charts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Erik Campobadal",
+                    "email": "soc@erik.cat"
+                }
+            ],
+            "description": "Create charts for laravel using diferent charts libraries",
+            "time": "2016-10-27T08:06:06+00:00"
+        },
+        {
             "name": "jakub-onderka/php-console-color",
             "version": "0.1",
             "source": {
@@ -510,6 +546,49 @@
                 "tokenizer"
             ],
             "time": "2018-03-21T22:21:57+00:00"
+        },
+        {
+            "name": "jlawrence/eos",
+            "version": "v3.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jlawrence11/eos.git",
+                "reference": "25e3d0f2316cb4636000f452a8e7dcc83725a32a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jlawrence11/eos/zipball/25e3d0f2316cb4636000f452a8e7dcc83725a32a",
+                "reference": "25e3d0f2316cb4636000f452a8e7dcc83725a32a",
+                "shasum": ""
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "jlawrence\\eos\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1+"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Lawrence",
+                    "email": "jon@jon-lawrence.com"
+                }
+            ],
+            "description": "Parse and solve math equations without using 'eval()'.",
+            "keywords": [
+                "eos",
+                "equations",
+                "math",
+                "solve"
+            ],
+            "time": "2016-03-02T22:35:41+00:00"
         },
         {
             "name": "laravel/framework",
