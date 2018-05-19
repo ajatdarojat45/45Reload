@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Auth;
 use Input;
 use Excel;
 use Charts;
@@ -24,8 +25,9 @@ class TransferController extends Controller
          $date2      =  $request->date2;
       }
 
-      $transfers = Transfer::orderBy('date', 'desc')
+      $transfers = Transfer::where('user_id', Auth::user()->id)
                            ->whereBetween('date', array($date1, $date2))
+                           ->orderBy('date', 'desc')
                            ->get();
 
 		return view('transfers.index', compact('date1', 'date2', 'transfers', 'no'));
@@ -47,6 +49,7 @@ class TransferController extends Controller
                      'date' => date('Y-m-d', strtotime($value->tanggal)),
                      'nominal' => $value->deposit,
                      'status' => $value->status,
+                     'user_id' => Auth::user()->id,
                   ];
    				}
                // dd($inserts);
@@ -64,5 +67,22 @@ class TransferController extends Controller
 		}
 
 		return back()->with('warning', 'Please select file');
+	}
+
+   public function exportToExcel($date1, $date2, $type)
+	{
+      $data = Transfer::select('downline', 'nominal', 'status', 'date')
+                     ->where('user_id', Auth::user()->id)
+                     ->whereBetween('date', array($date1, $date2))
+                     ->orderBy('date', 'asc')
+                     ->get()
+                     ->toArray();
+
+		return Excel::create('transfer', function($excel) use ($data) {
+			$excel->sheet('transfer sheet', function($sheet) use ($data)
+	        {
+				$sheet->fromArray($data);
+	        });
+		})->download($type);
 	}
 }

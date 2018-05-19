@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Auth;
 use Input;
 use Excel;
 use Charts;
@@ -23,9 +24,10 @@ class TransactionController extends Controller
          $date2      =  $request->date2;
       }
 
-      $transactions = Transaction::orderBy('date', 'desc')
-                           ->whereBetween('date', array($date1, $date2))
-                           ->get();
+      $transactions = Transaction::where('user_id', Auth::user()->id)
+                                 ->whereBetween('date', array($date1, $date2))
+                                 ->orderBy('date', 'asc')
+                                 ->get();
 
 		return view('transactions.index', compact('date1', 'date2', 'transactions', 'no'));
 	}
@@ -48,6 +50,7 @@ class TransactionController extends Controller
                      'sell_price' => $value->jual,
                      'profit' => $value->laba,
                      'status' => $value->status,
+                     'user_id' => Auth::user()->id,
                   ];
    				}
                // dd($inserts);
@@ -66,5 +69,22 @@ class TransactionController extends Controller
 		}
 
 		return back()->with('warning', 'Please select file');
+	}
+
+   public function exportToExcel($date1, $date2, $type)
+	{
+      $data = Transaction::select('costumer', 'distributor_price', 'sell_price', 'profit', 'status', 'date')
+                     ->where('user_id', Auth::user()->id)
+                     ->whereBetween('date', array($date1, $date2))
+                     ->orderBy('date', 'asc')
+                     ->get()
+                     ->toArray();
+
+		return Excel::create('transaction', function($excel) use ($data) {
+			$excel->sheet('transaction sheet', function($sheet) use ($data)
+	        {
+				$sheet->fromArray($data);
+	        });
+		})->download($type);
 	}
 }

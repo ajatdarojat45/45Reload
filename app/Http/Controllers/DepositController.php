@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Auth;
 use Input;
 use Excel;
 use Charts;
@@ -24,8 +25,9 @@ class DepositController extends Controller
          $date2      =  $request->date2;
       }
 
-      $deposits = Deposit::orderBy('date', 'desc')
+      $deposits = Deposit::where('user_id', Auth::user()->id)
                            ->whereBetween('date', array($date1, $date2))
+                           ->orderBy('date', 'asc')
                            ->get();
 
 		return view('deposits.index', compact('date1', 'date2', 'deposits', 'no'));
@@ -42,7 +44,12 @@ class DepositController extends Controller
             // dd($data);
    			if(!empty($data) && $data->count()){
    				foreach ($data as $key => $value) {
-   					$inserts[] = ['bank' => $value->bank, 'date' => date('Y-m-d', strtotime($value->tanggal)), 'nominal' => $value->deposit];
+   					$inserts[] = [
+                     'bank' => $value->bank,
+                     'date' => date('Y-m-d', strtotime($value->tanggal)),
+                     'nominal' => $value->deposit,
+                     'user_id' => Auth::user()->id
+                  ];
    				}
                // dd($inserts);
    				if(!empty($inserts)){
@@ -60,5 +67,22 @@ class DepositController extends Controller
 		}
 
 		return back()->with('warning', 'Please select file');
+	}
+
+   public function exportToExcel($date1, $date2, $type)
+	{
+      $data = Deposit::select('bank', 'nominal', 'date')
+                     ->where('user_id', Auth::user()->id)
+                     ->whereBetween('date', array($date1, $date2))
+                     ->orderBy('date', 'asc')
+                     ->get()
+                     ->toArray();
+
+		return Excel::create('deposit', function($excel) use ($data) {
+			$excel->sheet('deposit sheet', function($sheet) use ($data)
+	        {
+				$sheet->fromArray($data);
+	        });
+		})->download($type);
 	}
 }
