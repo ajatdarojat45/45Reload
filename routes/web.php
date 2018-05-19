@@ -18,6 +18,13 @@ Route::get('/', function () {
     return view('login');
 });
 
+Route::get('/register', function () {
+   if (!Auth::guest()) {
+      return view('dashboard');
+   }
+    return view('register');
+});
+
 
 Auth::routes();
 

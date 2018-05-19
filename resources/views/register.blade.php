@@ -78,15 +78,29 @@
                  <div class="col-lg-12 col-md-12">
                     <div style="border: 1px solid #a1a1a1; margin-top: 15px; padding: 30px;">
                        <h2>45 Reload</h2>
-                       <p><b>Please login</b> </p>
-                       <form method="POST" action="{{ route('login') }}">
+                       <p><b>Please Register</b> </p>
+                       <form method="POST" action="{{ route('register') }}">
                            @csrf
 
                            <div class="form-group row">
-                               <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                               <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                                <div class="col-md-8">
-                                   <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                                   <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+
+                                   @if ($errors->has('name'))
+                                       <span class="invalid-feedback">
+                                           <strong>{{ $errors->first('name') }}</strong>
+                                       </span>
+                                   @endif
+                               </div>
+                           </div>
+
+                           <div class="form-group row">
+                               <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                               <div class="col-md-8">
+                                   <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
 
                                    @if ($errors->has('email'))
                                        <span class="invalid-feedback">
@@ -111,29 +125,23 @@
                            </div>
 
                            <div class="form-group row">
-                               <label for="password" class="col-md-3 col-form-label text-md-right"></label>
+                               <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                                <div class="col-md-8">
-                                  <div class="checkbox">
-                                      <label>
-                                          <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
-                                      </label>
-                                  </div>
+                                   <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                                </div>
                            </div>
 
-                           <div class="form-group row">
-                               <label for="password" class="col-md-2 col-form-label text-md-right"></label>
-
-                               <div class="col-md-8">
-                                  <button type="submit" class="btn btn-primary">
-                                      {{ __('Login') }}
-                                  </button>
+                           <div class="form-group row mb-0">
+                               <div class="col-md-12 offset-md-4">
+                                   <button type="submit" class="btn btn-primary">
+                                       {{ __('Register') }}
+                                   </button>
                                </div>
                            </div>
-                           <b>Dont have a account ?</b>
-                           <a class="btn btn-link" href="{{ route('register') }}">
-                              Register Here
+                           <b>Have a account ?</b>
+                           <a class="btn btn-link" href="{{ route('login') }}">
+                              Login here
                            </a>
                        </form>
                     </div>
