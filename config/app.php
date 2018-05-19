@@ -163,6 +163,7 @@ return [
         App\Providers\GlobalHelperServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
         Vsmoraes\Pdf\PdfServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -217,6 +218,7 @@ return [
         'GlobalHelper' => App\Helpers\GlobalHelper::class,
         'Charts' => ConsoleTVs\Charts\Charts::class,
         'PDF' => 'Vsmoraes\Pdf\PdfFacade',
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 
