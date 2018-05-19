@@ -83,6 +83,14 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <center>
+           <br>
+             <p style="color:#636b6f;">
+               <b>
+                  <a href="https://ajatdarojat45.id" target="_blank" style="color:#636b6f;">lazyCode</a> - <i class="fa fa-code"></i> dengan <i class="fa fa-heart" style="color:red"></i> 
+               </b>
+             </p>
+        </center>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

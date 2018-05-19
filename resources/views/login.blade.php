@@ -16,7 +16,7 @@
         <link href="{{ asset('inspinia/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
+        <link href="{{ asset('inspinia/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
         <!-- Styles -->
         <style>
             html, body {
@@ -139,6 +139,8 @@
                     </div>
                  </div>
                </div>
+               <br>
+               <b><a href="https://ajatdarojat45.id" target="_blank" style="color:#636b6f;">lazyCode</a> - <i class="fa fa-code"></i> dengan <i class="fa fa-heart" style="color:red"></i> </b>
             </div>
         </div>
     </body>

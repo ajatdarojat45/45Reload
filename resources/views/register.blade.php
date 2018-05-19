@@ -147,6 +147,8 @@
                     </div>
                  </div>
                </div>
+               <br>
+               <b><a href="https://ajatdarojat45.id" target="_blank" style="color:#636b6f;">lazyCode</a> - <i class="fa fa-code"></i> dengan <i class="fa fa-heart" style="color:red"></i> </b>
             </div>
         </div>
     </body>
