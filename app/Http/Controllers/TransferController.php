@@ -7,12 +7,19 @@ use Auth;
 use Input;
 use Excel;
 use Charts;
-use App\Item;
 use App\Transfer;
+use Vsmoraes\Pdf\Pdf;
 use Illuminate\Http\Request;
 
 class TransferController extends Controller
 {
+   private $pdf;
+
+    public function __construct(Pdf $pdf)
+    {
+        $this->pdf = $pdf;
+    }
+
    public function index(Request $request)
 	{
       $no = 0;
@@ -85,4 +92,18 @@ class TransferController extends Controller
 	        });
 		})->download($type);
 	}
+
+   public function exportToPdf($date1, $date2)
+   {
+      $transfers = Transfer::where('user_id', Auth::user()->id)
+                           ->whereBetween('date', array($date1, $date2))
+                           ->orderBy('date', 'desc')
+                           ->get();
+
+      $html = view('transfers.indexPdf', compact('transfers', 'date1', 'date2'))->render();
+
+      return $this->pdf
+           ->load($html, 'A4', 'landscape')
+           ->show();
+   }
 }

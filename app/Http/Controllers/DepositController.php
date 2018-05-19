@@ -9,10 +9,18 @@ use Excel;
 use Charts;
 use App\Item;
 use App\Deposit;
+use Vsmoraes\Pdf\Pdf;
 use Illuminate\Http\Request;
 
 class DepositController extends Controller
 {
+   private $pdf;
+
+    public function __construct(Pdf $pdf)
+    {
+        $this->pdf = $pdf;
+    }
+
    public function index(Request $request)
 	{
       $no = 0;
@@ -85,4 +93,18 @@ class DepositController extends Controller
 	        });
 		})->download($type);
 	}
+
+   public function exportToPdf($date1, $date2)
+   {
+      $deposits = Deposit::where('user_id', Auth::user()->id)
+                     ->whereBetween('date', array($date1, $date2))
+                     ->orderBy('date', 'asc')
+                     ->get();
+
+      $html = view('deposits.indexPdf', compact('deposits', 'date1', 'date2'))->render();
+
+      return $this->pdf
+           ->load($html, 'A4', 'landscape')
+           ->show();
+   }
 }

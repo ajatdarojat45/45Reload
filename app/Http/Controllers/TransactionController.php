@@ -8,10 +8,18 @@ use Input;
 use Excel;
 use Charts;
 use App\Transaction;
+use Vsmoraes\Pdf\Pdf;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+   private $pdf;
+
+    public function __construct(Pdf $pdf)
+    {
+        $this->pdf = $pdf;
+    }
+
    public function index(Request $request)
 	{
       $no = 0;
@@ -87,4 +95,18 @@ class TransactionController extends Controller
 	        });
 		})->download($type);
 	}
+
+   public function exportToPdf($date1, $date2)
+   {
+      $transactions = Transaction::where('user_id', Auth::user()->id)
+                                 ->whereBetween('date', array($date1, $date2))
+                                 ->orderBy('date', 'asc')
+                                 ->get();
+
+      $html = view('transactions.indexPdf', compact('transactions', 'date1', 'date2'))->render();
+
+      return $this->pdf
+           ->load($html, 'A4', 'landscape')
+           ->show();
+   }
 }

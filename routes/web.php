@@ -46,14 +46,17 @@ Route::group(['middleware' =>'auth'], function(){
    Route::get('deposit/index', 'DepositController@index')->name('deposit/index');
    Route::post('deposit/importExcel', 'DepositController@importExcel')->name('deposit/importExcel');
    Route::get('deposit/exportToExcel/{date1}/{date2}/{type}', 'DepositController@exportToExcel')->name('deposit/exportToExcel');
+   Route::get('deposit/exportToPdf/{date1}/{date2}', 'DepositController@exportToPdf')->name('deposit/exportToPdf');
 
    // Transaction
    Route::get('transaction/index', 'TransactionController@index')->name('transaction/index');
    Route::post('transaction/importExcel', 'TransactionController@importExcel')->name('transaction/importExcel');
    Route::get('transaction/exportToExcel/{date1}/{date2}/{type}', 'TransactionController@exportToExcel')->name('transaction/exportToExcel');
+   Route::get('transaction/exportToPdf/{date1}/{date2}', 'TransactionController@exportToPdf')->name('transaction/exportToPdf');
 
    // Transfers
    Route::get('transfer/index', 'TransferController@index')->name('transfer/index');
    Route::post('transfer/importExcel', 'TransferController@importExcel')->name('transfer/importExcel');
    Route::get('transfer/exportToExcel/{date1}/{date2}/{type}', 'TransferController@exportToExcel')->name('transfer/exportToExcel');
+   Route::get('transfer/exportToPdf/{date1}/{date2}', 'TransferController@exportToPdf')->name('transfer/exportToPdf');
 });
