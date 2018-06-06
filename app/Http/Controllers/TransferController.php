@@ -155,4 +155,24 @@ class TransferController extends Controller
 
       return back()->with('success', 'Data saved');
    }
+
+   public function report(Request $request)
+   {
+      if (empty($request->date1)) {
+         $date1 = date('Y/m/d');
+         $date2 = date('Y/m/d');
+         $type = 'date';
+      }else {
+         $date1      =  $request->date1;
+         $date2      =  $request->date2;
+         $type      =  $request->type;
+      }
+
+      $transfer = new Transfer;
+      $data = $transfer->report($date1, $date2, $type);
+
+      // dd($data['labels']);
+
+      return view('transfers.report', compact('date1', 'date2', 'data', 'type'));
+   }
 }

@@ -45,6 +45,7 @@ Route::group(['middleware' =>'auth'], function(){
    // deposits
    Route::get('deposit/index', 'DepositController@index')->name('deposit/index');
    Route::post('deposit/store', 'DepositController@store')->name('deposit/store');
+   Route::get('deposit/report', 'DepositController@report')->name('deposit/report');
    Route::get('deposit/destroy/{id}', 'DepositController@destroy')->name('deposit/destroy');
    Route::post('deposit/importExcel', 'DepositController@importExcel')->name('deposit/importExcel');
    Route::post('deposit/multipleDestroy', 'DepositController@multipleDestroy')->name('deposit/multipleDestroy');
@@ -54,6 +55,7 @@ Route::group(['middleware' =>'auth'], function(){
    // Transaction
    Route::get('transaction/index', 'TransactionController@index')->name('transaction/index');
    Route::post('transaction/store', 'TransactionController@store')->name('transaction/store');
+   Route::get('transaction/report', 'TransactionController@report')->name('transaction/report');
    Route::get('transaction/destroy/{id}', 'TransactionController@destroy')->name('transaction/destroy');
    Route::post('transaction/importExcel', 'TransactionController@importExcel')->name('transaction/importExcel');
    Route::post('transaction/multipleDestroy', 'TransactionController@multipleDestroy')->name('transaction/multipleDestroy');
@@ -63,6 +65,7 @@ Route::group(['middleware' =>'auth'], function(){
    // Transfers
    Route::get('transfer/index', 'TransferController@index')->name('transfer/index');
    Route::post('transfer/store', 'TransferController@store')->name('transfer/store');
+   Route::get('transfer/report', 'TransferController@report')->name('transfer/report');
    Route::get('transfer/destroy/{id}', 'TransferController@destroy')->name('transfer/destroy');
    Route::post('transfer/importExcel', 'TransferController@importExcel')->name('transfer/importExcel');
    Route::post('transfer/multipleDestroy', 'TransferController@multipleDestroy')->name('transfer/multipleDestroy');

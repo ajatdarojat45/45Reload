@@ -156,4 +156,24 @@ class DepositController extends Controller
 
       return back()->with('success', 'Data saved');
    }
+
+   public function report(Request $request)
+   {
+      if (empty($request->date1)) {
+         $date1 = date('Y/m/d');
+         $date2 = date('Y/m/d');
+         $type = 'date';
+      }else {
+         $date1      =  $request->date1;
+         $date2      =  $request->date2;
+         $type      =  $request->type;
+      }
+
+      $deposit = new Deposit;
+      $data = $deposit->report($date1, $date2, $type);
+
+      // dd($data['labels']);
+
+      return view('deposits.report', compact('date1', 'date2', 'data', 'type'));
+   }
 }

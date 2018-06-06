@@ -160,4 +160,22 @@ class TransactionController extends Controller
 
       return back()->with('success', 'Data saved');
    }
+
+   public function report(Request $request)
+   {
+      if (empty($request->date1)) {
+         $date1 = date('Y/m/d');
+         $date2 = date('Y/m/d');
+         $type = 'date';
+      }else {
+         $date1      =  $request->date1;
+         $date2      =  $request->date2;
+         $type      =  $request->type;
+      }
+
+      $transaction = new Transaction;
+      $data = $transaction->report($date1, $date2, $type);
+
+      return view('transactions.report', compact('date1', 'date2', 'data', 'type'));
+   }
 }

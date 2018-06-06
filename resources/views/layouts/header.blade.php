@@ -46,9 +46,9 @@
                              Report
                           </a>
                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                             <a class="dropdown-item" href"#">Deposit</a>
-                             <a class="dropdown-item" href"#">Transaction</a>
-                             <a class="dropdown-item" href"#">Transfer</a>
+                             <a class="dropdown-item" href="{{route('deposit/report')}}">Deposit</a>
+                             <a class="dropdown-item" href="{{route('transaction/report')}}">Transaction</a>
+                             <a class="dropdown-item" href="{{route('transfer/report')}}">Transfer</a>
                           </div>
                        </li>
                     @endguest
