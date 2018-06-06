@@ -20,7 +20,7 @@
                      <th style="text-align: center;">No</th>
                      <th style="text-align: center;">Downline</th>
                      <th style="text-align: center;">Nominal</th>
-                     <th style="text-align: center;">Status</th>
+                     {{-- <th style="text-align: center;">Status</th> --}}
                      <th style="text-align: center;">Date</th>
                  </tr>
              </thead>
@@ -34,7 +34,7 @@
                       <td class="text-center">{{++$no}}</td>
                       <td class="text-left">{{$transfer->downline}}</td>
                       <td class="text-right">{{GlobalHelper::f_currency($transfer->nominal)}}</td>
-                      <td class="text-center">{{$transfer->status}}</td>
+                      {{-- <td class="text-center">{{$transfer->status}}</td> --}}
                       <td class="text-center">{{date('d M. Y', strtotime($transfer->date))}}</td>
                    </tr>
                    @php
@@ -46,7 +46,7 @@
                <tr>
                   <th colspan="2"class="text-center">Total</th>
                   <th class="text-right">{{GlobalHelper::f_currency($total)}}</th>
-                  <th colspan="2"></th>
+                  <th colspan=""></th>
                </tr>
              </tfoot>
          </table>

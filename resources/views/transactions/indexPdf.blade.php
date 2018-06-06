@@ -22,7 +22,7 @@
                      <th style="text-align: center;">Distributor Price</th>
                      <th style="text-align: center;">Sell Price</th>
                      <th style="text-align: center;">Profit</th>
-                     <th style="text-align: center;">Status</th>
+                     {{-- <th style="text-align: center;">Status</th> --}}
                      <th style="text-align: center;">Date</th>
                  </tr>
              </thead>
@@ -36,7 +36,7 @@
                 @foreach ($transactions as $transaction)
                    <tr>
                       <td class="text-center">{{++$no}}</td>
-                      <td class="text-left">{{$transaction->costumer}}</td>
+                      <td class="text-left">{{$transaction->customer}}</td>
                       <td class="text-right">
                          {{GlobalHelper::f_currency($transaction->distributor_price)}}
                       </td>
@@ -46,7 +46,7 @@
                       <td class="text-right">
                          {{GlobalHelper::f_currency($transaction->profit)}}
                       </td>
-                      <td class="text-center">{{$transaction->status}}</td>
+                      {{-- <td class="text-center">{{$transaction->status}}</td> --}}
                       <td class="text-center">{{date('d M. Y', strtotime($transaction->date))}}</td>
                    </tr>
                    @php
@@ -62,7 +62,7 @@
                   <th class="text-right">{{GlobalHelper::f_currency($distributorPriceTotal)}}</th>
                   <th class="text-right">{{GlobalHelper::f_currency($sellPriceTotal)}}</th>
                   <th class="text-right">{{GlobalHelper::f_currency($profitTotal)}}</th>
-                  <th colspan="2"></th>
+                  <th colspan=""></th>
                </tr>
              </tfoot>
          </table>

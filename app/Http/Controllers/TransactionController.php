@@ -53,7 +53,7 @@ class TransactionController extends Controller
    				foreach ($data as $key => $value) {
    					$inserts[] = [
                      'date' => date('Y-m-d', strtotime($value->tanggal)),
-                     'costumer' => $value->tujuan,
+                     'customer' => $value->tujuan,
                      'distributor_price' => $value->distributor,
                      'sell_price' => $value->jual,
                      'profit' => $value->laba,
@@ -81,7 +81,7 @@ class TransactionController extends Controller
 
    public function exportToExcel($date1, $date2, $type)
 	{
-      $data = Transaction::select('costumer', 'distributor_price', 'sell_price', 'profit', 'status', 'date')
+      $data = Transaction::select('customer', 'distributor_price', 'sell_price', 'profit', 'date')
                      ->where('user_id', Auth::user()->id)
                      ->whereBetween('date', array($date1, $date2))
                      ->orderBy('date', 'asc')
@@ -108,5 +108,56 @@ class TransactionController extends Controller
       return $this->pdf
            ->load($html, 'A4', 'landscape')
            ->show();
+   }
+
+   public function destroy($id)
+   {
+      $transaction = Transaction::findOrFail($id);
+
+      if($transaction->isOwner()){
+         $transaction->delete();
+      }else{
+         return back()->with('warning', 'You can not delete this data.');
+      }
+
+      return back()->with('success', 'Data Deleted');
+   }
+
+   public function multipleDestroy(Request $request)
+   {
+      // dd($request->transactions);
+      if ($request->transactions != null) {
+         foreach ($request->transactions as $data) {
+            $transaction = Transaction::where('id', $data)
+                                       ->where('user_id', Auth::user()->id)
+                                       ->first();
+            $transaction->delete();
+         }
+         return back()->with('success', 'Data Deleted');
+
+      }else {
+         return back()->with('warning', 'Please select data.');
+      }
+   }
+
+   public function store(Request $request)
+   {
+      $this->validate($request, [
+         'customer'           => 'required',
+         'distributor_price'  => 'required',
+         'sell_price'         => 'required',
+         'date'               => 'required',
+      ]);
+
+      $transaction = Transaction::create([
+         'customer'           => $request->customer,
+         'distributor_price'  => $request->distributor_price,
+         'sell_price'         => $request->sell_price,
+         'profit'             => $request->sell_price - $request->distributor_price,
+         'date'               => $request->date,
+         'user_id'            => Auth::user()->id,
+      ]);
+
+      return back()->with('success', 'Data saved');
    }
 }

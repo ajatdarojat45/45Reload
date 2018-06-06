@@ -78,7 +78,7 @@ class TransferController extends Controller
 
    public function exportToExcel($date1, $date2, $type)
 	{
-      $data = Transfer::select('downline', 'nominal', 'status', 'date')
+      $data = Transfer::select('downline', 'nominal', 'date')
                      ->where('user_id', Auth::user()->id)
                      ->whereBetween('date', array($date1, $date2))
                      ->orderBy('date', 'asc')
@@ -105,5 +105,54 @@ class TransferController extends Controller
       return $this->pdf
            ->load($html, 'A4', 'landscape')
            ->show();
+   }
+
+   public function destroy($id)
+   {
+      $transfer = Transfer::findOrFail($id);
+
+      if($transfer->isOwner()){
+         $transfer->delete();
+      }else{
+         return back()->with('warning', 'You can not delete this data.');
+      }
+
+      return back()->with('success', 'Data Deleted');
+   }
+
+   public function multipleDestroy(Request $request)
+   {
+      // cek apakah datanya kosong atau ngga
+      if ($request->transfers != null) {
+         // melakukan delete dengan looping
+         foreach ($request->transfers as $data) {
+            $transfer = Transfer::where('id', $data)
+                                       ->where('user_id', Auth::user()->id)
+                                       ->first();
+            $transfer->delete();
+         }
+         return back()->with('success', 'Data Deleted');
+
+      }else {
+         return back()->with('warning', 'Please select data.');
+      }
+   }
+
+   public function store(Request $request)
+   {
+      $this->validate($request, [
+         'downline'      => 'required',
+         'nominal'   => 'required',
+         'date'      => 'required',
+      ]);
+
+      $transfer = Transfer::create([
+         'downline'  => $request->downline,
+         'date'      => $request->date,
+         'nominal'   => $request->nominal,
+         'user_id'   => Auth::user()->id,
+      ]);
+
+      return back()->with('success', 'Data saved');
    }
 }

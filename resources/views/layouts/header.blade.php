@@ -2,21 +2,23 @@
 <html lang="{{ app()->getLocale() }}">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title') - 45 Reload</title>
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> {{-- bootstrap --}}
-    <link href="{{asset('bootstrap-3/css/bootstrap.min.css')}}" rel="stylesheet"> {{-- dataTables --}}
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
-    <link href="{{ asset('inspinia/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
-    <link href="{{ asset('inspinia/css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>@yield('title') - konterPulsa</title>
+   <!-- Fonts -->
+   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+   <!-- Styles -->
+   <link href="{{ asset('css/app.css') }}" rel="stylesheet"> {{-- bootstrap --}}
+   <link href="{{asset('bootstrap-3/css/bootstrap.min.css')}}" rel="stylesheet"> {{-- dataTables --}}
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+   <link href="{{ asset('inspinia/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+   <link href="{{ asset('inspinia/css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
    <link href="{{ asset('inspinia/css/plugins/daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet">
     {!! Charts::assets() !!}
+   <!-- Sweet Alert -->
+   <link href="{{ asset('inspinia/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -25,7 +27,7 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{-- {{ config('app.name', 'Laravel') }} --}}
-                    45 Reload
+                    konterPulsa
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -87,7 +89,7 @@
            <br>
              <p style="color:#636b6f;">
                <b>
-                  <a href="https://ajatdarojat45.id" target="_blank" style="color:#636b6f;">lazyCode</a> - <i class="fa fa-code"></i> dengan <i class="fa fa-heart" style="color:red"></i> 
+                  <a href="https://ajatdarojat45.id" target="_blank" style="color:#636b6f;">lazyCode</a> - <i class="fa fa-code"></i> dengan <i class="fa fa-heart" style="color:red"></i>
                </b>
              </p>
         </center>
@@ -101,12 +103,14 @@
    <script src="{{ asset('inspinia/js/plugins/datapicker/bootstrap-datepicker.js') }} "></script>
    <!-- Date range picker -->
    <script src="{{ asset('inspinia/js/plugins/daterangepicker/daterangepicker.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#example1').DataTable();
-        });
-    </script>
-    <script type="text/javascript">
+   <!-- Sweet alert -->
+   <script src="{{ asset('inspinia/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+   <script type="text/javascript">
+      $(document).ready(function() {
+         $('#example1').DataTable();
+      });
+   </script>
+   <script type="text/javascript">
       $(document).ready(function() {
          $('#rate').modal('show');
       });
@@ -153,6 +157,25 @@
          keyboardNavigation: false,
          forceParse: false,
          autoclose: true
+      });
+   </script>
+   <script>
+      jQuery(document).ready(function($) {
+         $('.confirm').on('click', function() {
+            var getLink = $(this).attr('href');
+            swal({
+                  title: "Are you sure?",
+                  text: "do this action",
+                  type: "warning",
+                  html: true,
+                  confirmButtonColor: '#d9534f',
+                  showCancelButton: true,
+               },
+               function() {
+                  window.location.href = getLink
+               });
+            return false;
+         });
       });
    </script>
 </body>

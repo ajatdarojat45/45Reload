@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Login - 45 Reload</title>
+        <title>Register - konterPulsa</title>
         <!-- Fonts -->
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
@@ -77,7 +77,7 @@
                <div class="row">
                  <div class="col-lg-12 col-md-12">
                     <div style="border: 1px solid #a1a1a1; margin-top: 15px; padding: 30px;">
-                       <h2>45 Reload</h2>
+                       <h2>konterPulsa</h2>
                        <p><b>Please Register</b> </p>
                        <form method="POST" action="{{ route('register') }}">
                            @csrf

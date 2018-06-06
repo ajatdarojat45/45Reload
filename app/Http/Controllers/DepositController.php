@@ -107,4 +107,53 @@ class DepositController extends Controller
            ->load($html, 'A4', 'landscape')
            ->show();
    }
+
+   public function destroy($id)
+   {
+      $deposit = Deposit::findOrFail($id);
+
+      if($deposit->isOwner()){
+         $deposit->delete();
+      }else{
+         return back()->with('warning', 'You can not delete this data.');
+      }
+
+      return back()->with('success', 'Data Deleted');
+   }
+
+   public function multipleDestroy(Request $request)
+   {
+      // cek apakah datanya kosong atau ngga
+      if ($request->deposits != null) {
+         // melakukan delete dengan looping
+         foreach ($request->deposits as $data) {
+            $deposit = Deposit::where('id', $data)
+                                       ->where('user_id', Auth::user()->id)
+                                       ->first();
+            $deposit->delete();
+         }
+         return back()->with('success', 'Data Deleted');
+
+      }else {
+         return back()->with('warning', 'Please select data.');
+      }
+   }
+
+   public function store(Request $request)
+   {
+      $this->validate($request, [
+         'bank'      => 'required',
+         'nominal'   => 'required',
+         'date'      => 'required',
+      ]);
+
+      $deposit = Deposit::create([
+         'bank'      => $request->bank,
+         'date'      => $request->date,
+         'nominal'   => $request->nominal,
+         'user_id'   => Auth::user()->id,
+      ]);
+
+      return back()->with('success', 'Data saved');
+   }
 }
