@@ -51,6 +51,10 @@
                              <a class="dropdown-item" href="{{route('transfer/report')}}">Transfer</a>
                           </div>
                        </li>
+                       <li style="margin-left:10px;"><a class="nav-link" href="#">Documentation</a></li>
+                       @if (Auth::user()->id == 1)
+                          <li style="margin-left:10px;"><a class="nav-link" href="{{ route('log/index') }}">Log</a></li>
+                       @endif
                     @endguest
                     </ul>
                     <!-- Right Side Of Navbar -->

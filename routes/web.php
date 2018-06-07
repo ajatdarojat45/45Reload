@@ -25,12 +25,17 @@ Route::get('/register', function () {
     return view('register');
 });
 
+Route::get('auth/{provider}', 'Auth\RegisterController@redirectToProvider')->name('auth');
+Route::get('auth/{provider}/callback', 'Auth\RegisterController@handleProviderCallback');
+
+Route::get('log/store', 'LogController@store')->name('log/store');
 
 Auth::routes();
 
 Route::get('/home', function () {
    return redirect('dashboard');
 });
+
 
 Route::group(['middleware' =>'auth'], function(){
    Route::get('/dashboard', function () {
@@ -51,6 +56,9 @@ Route::group(['middleware' =>'auth'], function(){
    Route::post('deposit/multipleDestroy', 'DepositController@multipleDestroy')->name('deposit/multipleDestroy');
    Route::get('deposit/exportToPdf/{date1}/{date2}', 'DepositController@exportToPdf')->name('deposit/exportToPdf');
    Route::get('deposit/exportToExcel/{date1}/{date2}/{type}', 'DepositController@exportToExcel')->name('deposit/exportToExcel');
+
+   // $logs
+   Route::get('log/index', 'LogController@index')->name('log/index');
 
    // Transaction
    Route::get('transaction/index', 'TransactionController@index')->name('transaction/index');
